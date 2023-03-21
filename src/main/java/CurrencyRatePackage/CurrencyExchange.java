@@ -1,6 +1,7 @@
 package CurrencyRatePackage;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -10,22 +11,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Класс, в котором реализованы основные методы: считывание с файла csv (ссылка помещается в FILENAME) - readCurrencyRatesFromFile,
+ * Класс, в котором реализованы основные методы: считывание с файла csv (ссылка помещается в FILENAME_*) - readCurrencyRatesFromFile,
  * высчитывание курса на завтра на определённую валюту - getAverageRateForTomorrow
  * и курс на опредлённую валюту на неделю вперёд - getAverageRatesForNextSevenDays.
- *
+ * <p>
  * Вспомогательный метод findLatestRate находит в коллекции последнюю нужную нам валюту (Турецкую лиру, Доллар США или Евро).
  * Вспомогательный метод findPreviousRates находит последние count записей в коллекции.
  * Вспомогательный метод calculateAverageRate высчиттывает среднее арифметическое из всех найденных записей.
- *
  */
 
 public class CurrencyExchange {
 
-    public static final String FILENAME = "C:\\Users\\Sharmath\\Desktop\\CurrencyRatesProject\\try.csv";
+    public static File FILENAME_TRY = new File(".\\src\\main\\resources\\try.csv");
+    public static File FILENAME_USD = new File(".\\src\\main\\resources\\usd.csv");
+    public static File FILENAME_EUR = new File(".\\src\\main\\resources\\eur.csv");
     private static final int PREVIOUS_RATES_COUNT = 7;
 
-    public List<CurrencyRate> readCurrencyRatesFromFile(String filename) {
+    public List<CurrencyRate> readCurrencyRatesFromFile(File filename) {
         List<CurrencyRate> rates = new ArrayList<>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
