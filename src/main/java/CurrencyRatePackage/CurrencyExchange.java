@@ -22,7 +22,7 @@ import java.util.List;
 
 public class CurrencyExchange {
 
-    public static final String FILENAME = "C:\\Users\\Sharmath\\Desktop\\HomeWork\\try.csv";
+    public static final String FILENAME = "C:\\Users\\Sharmath\\Desktop\\CurrencyRatesProject\\src\\main\\resources\\try.csv";
     private static final int PREVIOUS_RATES_COUNT = 7;
 
     public List<CurrencyRate> readCurrencyRatesFromFile(String filename) {
