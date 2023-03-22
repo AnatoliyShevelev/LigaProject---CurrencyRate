@@ -1,4 +1,4 @@
-package CurrencyRatePackage;
+package ru.liga.ashevelev.resources;
 
 import java.time.LocalDate;
 
