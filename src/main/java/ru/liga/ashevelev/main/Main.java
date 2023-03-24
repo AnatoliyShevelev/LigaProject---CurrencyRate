@@ -1,6 +1,6 @@
 package ru.liga.ashevelev.main;
 
-import ru.liga.ashevelev.iotools.RunningProgram;
+import ru.liga.ashevelev.iotools.ConsoleApplication;
 
 /**
  * допускается введение комманд: "rate try tomorrow", "rate usd tomorrow", "rate euro tomorrow"
@@ -9,8 +9,7 @@ import ru.liga.ashevelev.iotools.RunningProgram;
 
 public class Main {
     public static void main(String[] args) {
-        RunningProgram run = new RunningProgram();
-        String command = run.readCommand();
-        run.inputCommand(command);
+        ConsoleApplication run = new ConsoleApplication();
+        run.start();
     }
 }

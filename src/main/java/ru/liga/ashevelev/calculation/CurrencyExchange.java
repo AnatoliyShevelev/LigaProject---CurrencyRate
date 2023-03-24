@@ -23,12 +23,12 @@ import java.util.Map;
 public class CurrencyExchange {
 
     private static final int PREVIOUS_RATES_COUNT = 7;
-    private static final double ONE_HUNDRED_PERCENT = 100.00;
+    private final PredictionAlgorithm predictionAlgorithm = new PredictionAlgorithm();
 
     public double calculateAverageRateForTomorrow(String currencyName, List<CurrencyRate> rates) {
         CurrencyRate todayRate = findLatestRate(currencyName, rates);
         List<CurrencyRate> previousRates = findPreviousRates(currencyName, todayRate.getDate(), PREVIOUS_RATES_COUNT, rates);
-        return Math.round(new PredictionAlgorithm().calculateAverageRate(previousRates) * ONE_HUNDRED_PERCENT) / ONE_HUNDRED_PERCENT;
+        return predictionAlgorithm.calculateAverageRate(previousRates);
     }
 
     public Map<String, Double> calculateAverageRatesForNextSevenDays(String currencyName, List<CurrencyRate> rates) {
@@ -37,7 +37,7 @@ public class CurrencyExchange {
         for (int i = 0; i < PREVIOUS_RATES_COUNT; i++) {
             CurrencyRate latestRate = findLatestRate(currencyName, rates);
             List<CurrencyRate> previousRates = findPreviousRates(currencyName, latestRate.getDate(), PREVIOUS_RATES_COUNT + i, rates);
-            double averageRate = Math.round(new PredictionAlgorithm().calculateAverageRate(previousRates) * ONE_HUNDRED_PERCENT) / ONE_HUNDRED_PERCENT;
+            double averageRate = predictionAlgorithm.calculateAverageRate(previousRates);
             String date = currentDate.plusDays(i + 1).format(DateTimeFormatter.ofPattern("E dd.MM.yyyy"));
             averageRates.put(date, averageRate);
         }

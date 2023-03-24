@@ -51,7 +51,7 @@ public class CommandHandler {
     private void printAverageRateForTomorrow(String filename, String currency) {
         List<String> csvLines = fileReader.readCsvLines(new File(filename));
         List<CurrencyRate> rates = mapper.toCurrencyRates(csvLines);
-        System.out.println(tomorrow.format(formatter) + " - " + currencyExchange.calculateAverageRateForTomorrow(currency, rates));
+        System.out.println(tomorrow.format(formatter) + " - " + String.format("%.2f",currencyExchange.calculateAverageRateForTomorrow(currency, rates)));
     }
 
     private void printAverageRatesForNextSevenDays(String filename, String currency) {
@@ -59,7 +59,7 @@ public class CommandHandler {
         List<CurrencyRate> rates = mapper.toCurrencyRates(csvLines);
         Map<String, Double> averageRates = currencyExchange.calculateAverageRatesForNextSevenDays(currency, rates);
         for (Map.Entry<String, Double> entry : averageRates.entrySet()) {
-            System.out.println(entry.getKey() + " - " + entry.getValue());
+            System.out.println(entry.getKey() + " - " + String.format("%.2f",entry.getValue()));
         }
     }
 }
