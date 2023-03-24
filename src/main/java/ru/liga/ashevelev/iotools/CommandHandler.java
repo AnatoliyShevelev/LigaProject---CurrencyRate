@@ -1,6 +1,7 @@
 package ru.liga.ashevelev.iotools;
 
 import ru.liga.ashevelev.calculation.CurrencyExchange;
+import ru.liga.ashevelev.mapper.CurrencyRateMapper;
 import ru.liga.ashevelev.resources.CurrencyRate;
 
 import java.io.File;
@@ -26,6 +27,7 @@ public class CommandHandler {
 
     private final CurrencyExchange currencyExchange = new CurrencyExchange();
     private final FileReader fileReader = new FileReader();
+    private final CurrencyRateMapper mapper = new CurrencyRateMapper();
 
     private final Map<String, Runnable> commands = new HashMap<>();
 
@@ -47,12 +49,14 @@ public class CommandHandler {
     }
 
     private void printAverageRateForTomorrow(String filename, String currency) {
-        List<CurrencyRate> rates = fileReader.readCurrencyRatesFromFile(new File(filename));
+        List<String> csvLines = fileReader.readCsvLines(new File(filename));
+        List<CurrencyRate> rates = mapper.toCurrencyRates(csvLines);
         System.out.println(tomorrow.format(formatter) + " - " + currencyExchange.calculateAverageRateForTomorrow(currency, rates));
     }
 
     private void printAverageRatesForNextSevenDays(String filename, String currency) {
-        List<CurrencyRate> rates = fileReader.readCurrencyRatesFromFile(new File(filename));
+        List<String> csvLines = fileReader.readCsvLines(new File(filename));
+        List<CurrencyRate> rates = mapper.toCurrencyRates(csvLines);
         Map<String, Double> averageRates = currencyExchange.calculateAverageRatesForNextSevenDays(currency, rates);
         for (Map.Entry<String, Double> entry : averageRates.entrySet()) {
             System.out.println(entry.getKey() + " - " + entry.getValue());
