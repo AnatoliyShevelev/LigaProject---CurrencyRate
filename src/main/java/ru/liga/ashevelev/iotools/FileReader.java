@@ -11,9 +11,9 @@ import java.util.List;
 */
 public class FileReader {
 
-    public static final File FILENAME_TRY = new File(".\\src\\main\\resources\\try1.csv");
-    public static final File FILENAME_USD = new File(".\\src\\main\\resources\\usd1.csv");
-    public static final File FILENAME_EUR = new File(".\\src\\main\\resources\\eur1.csv");
+    public static final File FILENAME_TRY = new File(".\\src\\main\\resources\\TRY.csv");
+    public static final File FILENAME_USD = new File(".\\src\\main\\resources\\USD.csv");
+    public static final File FILENAME_EUR = new File(".\\src\\main\\resources\\EUR.csv");
 
     public List<String> readCsvLines(File filename) {
 
