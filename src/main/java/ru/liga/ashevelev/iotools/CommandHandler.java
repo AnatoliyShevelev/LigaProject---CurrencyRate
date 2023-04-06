@@ -110,6 +110,11 @@ public class CommandHandler {
 //            //result = entry.getKey() + " - " + String.format("%.2f",entry.getValue());
 //
 //        }
+        //todo в стримах chain методы лучше писать друг под другом, будет легче читать -> averageRates.entrySet()
+        //                                                                                            .stream()
+        //                                                                                            .map(e -> e.getKey() + " - " + String.format("%.2f",e.getValue()))
+        //                                                                                            .collect(Collectors.joining("\n"));
+        //todo функцию в методе map() лучше вынести в отдельный метод
         result = averageRates.entrySet().stream().map(e -> e.getKey() + " - " + String.format("%.2f",e.getValue()))
                 .collect(Collectors.joining("\n"));
     }
@@ -123,6 +128,7 @@ public class CommandHandler {
 //            //result = entry.getKey() + " - " + String.format("%.2f",entry.getValue());
 //
 //        }
+        //todo повторяющийся код, тоже самое что в методе выше, надо вынести в отдельный метод
         result = averageRates.entrySet().stream().map(e -> e.getKey() + " - " + String.format("%.2f",e.getValue()))
                 .collect(Collectors.joining("\n"));
     }

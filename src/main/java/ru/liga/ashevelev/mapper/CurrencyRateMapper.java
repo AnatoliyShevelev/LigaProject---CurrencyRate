@@ -29,6 +29,7 @@ public class CurrencyRateMapper {
         try {
             String[] fields = line.split(";");
             DateTimeFormatter format = new DateTimeFormatterBuilder()
+                    //todo строку можно вынести в константу
                     .appendPattern("[dd/MM/yyyy][dd.MM.yyyy][d/MM/yyyy]")
                     .toFormatter();
             int nominal = Integer.parseInt(fields[0].trim());

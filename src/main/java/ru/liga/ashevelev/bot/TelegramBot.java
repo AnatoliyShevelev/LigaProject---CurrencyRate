@@ -7,6 +7,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.liga.ashevelev.iotools.CommandHandler;
 
 public class TelegramBot extends TelegramLongPollingBot {
+    //todo можно добавить модификатор static
     final private String BOT_TOKEN = "6077329097:AAH5YN96PIlBEk5yiLkRlq_hEov8VfNUbx0";
     final private String BOT_NAME = "ashevelev_bot";
     private final CommandHandler commandHandler = new CommandHandler();
@@ -34,6 +35,8 @@ public class TelegramBot extends TelegramLongPollingBot {
             this.execute(sendMessage);
         } catch (TelegramApiException e) {
            // e.printStackTrace();
+            //todo когда ловишь еxception пиши лог в консоль, о том что случилось
+            //todo минимальная конструкция для еxception ->  throw  new RuntimeException(e.getMessage(), e)
             throw  new RuntimeException(e);
         }
     }

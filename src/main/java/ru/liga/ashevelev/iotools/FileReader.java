@@ -25,6 +25,8 @@ public class FileReader {
                 lines.add(line);
             }
         } catch (IOException e) {
+            //todo надо добавить лог, о том что случилось
+            //todo здесь не надо бросить exception?
             e.printStackTrace();
         }
 

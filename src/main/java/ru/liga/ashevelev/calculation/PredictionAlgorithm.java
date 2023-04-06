@@ -32,6 +32,7 @@ public class PredictionAlgorithm {
 
     protected CurrencyRate findRateForDate(String currencyName, LocalDate date, List<CurrencyRate> rates) {
         for (CurrencyRate rate : rates) {
+            //todo условие лучше вынести в метод и назвать по бизнесу
             if (rate.getName().equals(currencyName) && rate.getDate().equals(date)) {
                 return rate;
             }
