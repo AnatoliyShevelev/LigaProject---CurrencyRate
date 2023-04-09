@@ -1,0 +1,53 @@
+rate try -date tomorrow -alg avg
+rate usd -date tomorrow -alg avg
+rate euro -date tomorrow -alg avg
+rate amd -date tomorrow -alg avg
+rate bgn -date tomorrow -alg avg
+
+rate try -date tomorrow -alg last year
+rate usd -date tomorrow -alg last year
+rate euro -date tomorrow -alg last year
+rate amd -date tomorrow -alg last year
+rate bgn -date tomorrow -alg last year
+
+rate try -date tomorrow -alg mist
+rate usd -date tomorrow -alg mist
+rate euro -date tomorrow -alg mist
+rate amd -date tomorrow -alg mist
+rate bgn -date tomorrow -alg mist
+
+rate try -period week -alg avg -output list
+rate usd -period week -alg avg -output list
+rate euro -period week -alg avg -output list
+rate amd -period week -alg avg -output list
+rate bgn -period week -alg avg -output list
+
+rate try -period month -alg avg -output list
+rate usd -period month -alg avg -output list
+rate euro -period month -alg avg -output list
+rate amd -period month -alg avg -output list
+rate bgn -period month -alg avg -output list
+
+rate try -period week -alg last year -output list
+rate usd -period week -alg last year -output list
+rate euro -period week -alg last year -output list
+rate amd -period week -alg last year -output list
+rate bgn -period week -alg last year -output list
+
+rate try -period month -alg last year -output list
+rate usd -period month -alg last year -output list
+rate euro -period month -alg last year -output list
+rate amd -period month -alg last year -output list
+rate bgn -period month -alg last year -output list
+
+rate try -period week -alg mist -output list
+rate usd -period week -alg mist -output list
+rate euro -period week -alg mist -output list
+rate amd -period week -alg mist -output list
+rate bgn -period week -alg mist -output list
+
+rate try -period month -alg mist -output list
+rate usd -period month -alg mist -output list
+rate euro -period month -alg mist -output list
+rate amd -period month -alg mist -output list
+rate bgn -period month -alg mist -output list

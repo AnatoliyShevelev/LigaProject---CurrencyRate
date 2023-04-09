@@ -5,11 +5,17 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.liga.ashevelev.iotools.CommandHandler;
+import ru.liga.ashevelev.iotools.CommandList;
+import ru.liga.ashevelev.iotools.FileReader;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TelegramBot extends TelegramLongPollingBot {
-    final private String BOT_TOKEN = "6077329097:AAH5YN96PIlBEk5yiLkRlq_hEov8VfNUbx0";
-    final private String BOT_NAME = "ashevelev_bot";
+    static final private String BOT_TOKEN = "6077329097:AAH5YN96PIlBEk5yiLkRlq_hEov8VfNUbx0";
+    static final private String BOT_NAME = "ashevelev_bot";
     private final CommandHandler commandHandler = new CommandHandler();
+    private final CommandList commandList = new CommandList();
 
     @Override
     public String getBotUsername() {
@@ -28,13 +34,23 @@ public class TelegramBot extends TelegramLongPollingBot {
         String text = update.getMessage().getText();
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);
-        sendMessage.setText(commandHandler.handleCommand(text));
+
+        if (text.equals("/start")) {
+            sendMessage.setText("Добрый день! Это телеграмм-бот, который может рассчитать курсы валют. Введите /help, чтобы получить список команд.");
+        } else if (text.equals("/help")) {
+            sendMessage.setText("Список команд:" + "\n" +
+                    commandList.printCommands());
+        } else {
+            sendMessage.setText(commandHandler.handleCommand(text));
+        }
 
         try {
             this.execute(sendMessage);
         } catch (TelegramApiException e) {
-           // e.printStackTrace();
-            throw  new RuntimeException(e);
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "catch TelegramApiException", e);
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
+
+
 }

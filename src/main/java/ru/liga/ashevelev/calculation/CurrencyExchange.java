@@ -4,10 +4,7 @@ import ru.liga.ashevelev.resources.CurrencyRate;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Класс, в котором реализованы основные методы.
@@ -27,6 +24,12 @@ public class CurrencyExchange {
     public double calculateLastYearRateForTomorrow(String currencyName, List<CurrencyRate> rates) {
         CurrencyRate rateLastYear = predictionAlgorithm.findLastYearRate(currencyName, rates);
         return rateLastYear.getRate();
+    }
+
+    public double calculateRandomRateForTomorrow(String currencyName, List<CurrencyRate> rates) {
+        LocalDate tomorrow = LocalDate.now().plusDays(1);
+        CurrencyRate randomRate = predictionAlgorithm.findRandomRateForDate(currencyName, rates, tomorrow);
+        return randomRate.getRate();
     }
 
     public double calculateAverageRateForFutureDate(String currencyName, List<CurrencyRate> rates, LocalDate futureDate) {
@@ -66,15 +69,28 @@ public class CurrencyExchange {
     }
 
     public Map<String, Double> calculateLastYearRatesForPeriod(String currencyName, List<CurrencyRate> rates, int period) {
-        Map<String, Double> averageRates = new LinkedHashMap<>();
+        Map<String, Double> lastYearRates = new LinkedHashMap<>();
         LocalDate currentDate = LocalDate.now();
         for (int i = 0; i < period; i++) {
             CurrencyRate rateLastYear = predictionAlgorithm.findLastYearRate(currencyName, rates);
             double lastYearRate = rateLastYear.getRate();
             String date = currentDate.plusDays(i + 1).format(DateTimeFormatter.ofPattern("E dd.MM.yyyy"));
-            averageRates.put(date, lastYearRate);
+            lastYearRates.put(date, lastYearRate);
         }
-        return averageRates;
+        return lastYearRates;
+    }
+
+    public Map<String, Double> calculateRandomRatesForPeriod(String currencyName, List<CurrencyRate> rates, int period) {
+        Map<String, Double> randomRates = new LinkedHashMap<>();
+        LocalDate currentDate = LocalDate.now();
+        for (int i = 0; i < period; i++) {
+            LocalDate date = currentDate.plusDays(i + 1);
+            CurrencyRate randomRate = predictionAlgorithm.findRandomRateForDate(currencyName, rates, date);
+            double rate = randomRate.getRate();
+            String dateString = date.format(DateTimeFormatter.ofPattern("E dd.MM.yyyy"));
+            randomRates.put(dateString, rate);
+        }
+        return randomRates;
     }
 
     private List<CurrencyRate> findFutureRates(String currencyName, LocalDate date, int count, List<CurrencyRate> rates) {

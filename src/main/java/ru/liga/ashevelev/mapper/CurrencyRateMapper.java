@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
  */
 
 public class CurrencyRateMapper {
+    private final String dateFormat = "[dd/MM/yyyy][dd.MM.yyyy][d/MM/yyyy]";
 
     public List<CurrencyRate> toCurrencyRates(List<String> csvLines) {
         return csvLines.stream()
@@ -29,7 +30,7 @@ public class CurrencyRateMapper {
         try {
             String[] fields = line.split(";");
             DateTimeFormatter format = new DateTimeFormatterBuilder()
-                    .appendPattern("[dd/MM/yyyy][dd.MM.yyyy][d/MM/yyyy]")
+                    .appendPattern(dateFormat)
                     .toFormatter();
             int nominal = Integer.parseInt(fields[0].trim());
             LocalDate date = LocalDate.parse(fields[1].trim(), format);

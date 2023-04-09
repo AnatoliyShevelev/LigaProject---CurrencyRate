@@ -4,11 +4,10 @@ import ru.liga.ashevelev.resources.CurrencyRate;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * Класс, куда будут вносится алгоритмы вычисления.
- * Сейчас здесь один метод - calculateAverageRate,
- * который высчитывает среднее арифметическое из всех найденных записей.
+ * Класс, который содержит алгоритмы вычисления.
  */
 
 public class PredictionAlgorithm {
@@ -30,12 +29,32 @@ public class PredictionAlgorithm {
         return rateLastYear;
     }
 
+    protected CurrencyRate findRandomRateForDate(String currencyName, List<CurrencyRate> rates, LocalDate date) {
+        int randomYear = ThreadLocalRandom.current().nextInt(2005, date.getYear());
+        LocalDate randomDate = date.withYear(randomYear);
+        CurrencyRate randomRate = findRateForDate(currencyName, randomDate, rates);
+        if (randomRate == null) {
+            randomRate = findRateForDate(currencyName, randomDate.minusDays(1), rates);
+        }
+        return randomRate;
+    }
+
     protected CurrencyRate findRateForDate(String currencyName, LocalDate date, List<CurrencyRate> rates) {
-        for (CurrencyRate rate : rates) {
-            if (rate.getName().equals(currencyName) && rate.getDate().equals(date)) {
-                return rate;
+        CurrencyRate rate = null;
+        for (CurrencyRate r : rates) {
+            if (hasRateFound(r, currencyName, date)) {
+                rate = r;
+                break;
             }
         }
-        return null;
+        if (rate == null) {
+            LocalDate prevDate = date.minusDays(1);
+            rate = findRateForDate(currencyName, prevDate, rates);
+        }
+        return rate;
+    }
+
+    private boolean hasRateFound(CurrencyRate rate, String currencyName, LocalDate date) {
+        return rate.getName().equals(currencyName) && rate.getDate().equals(date);
     }
 }
