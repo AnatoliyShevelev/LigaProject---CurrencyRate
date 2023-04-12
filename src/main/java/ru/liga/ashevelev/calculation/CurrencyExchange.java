@@ -62,6 +62,7 @@ public class CurrencyExchange {
             CurrencyRate latestRate = findLatestRate(currencyName, rates);
             List<CurrencyRate> previousRates = findPreviousRates(currencyName, latestRate.getDate(), PREVIOUS_RATES_COUNT + i, rates);
             double averageRate = predictionAlgorithm.calculateAverageRate(previousRates);
+            //todo "E dd.MM.yyyy" используется три раза в этом классе, можно вынести в константу
             String date = currentDate.plusDays(i + 1).format(DateTimeFormatter.ofPattern("E dd.MM.yyyy"));
             averageRates.put(date, averageRate);
         }
@@ -97,6 +98,7 @@ public class CurrencyExchange {
         List<CurrencyRate> futureRates = new ArrayList<>();
         for (int i = 0; futureRates.size() < count && i < rates.size(); i++) {
             CurrencyRate rate = rates.get(i);
+            //todo условие лучше вынести в метод и назвать по бизнесу
             if (rate.getName().equals(currencyName) && rate.getDate().isAfter(date)) {
                 futureRates.add(rate);
             }
@@ -121,6 +123,7 @@ public class CurrencyExchange {
         List<CurrencyRate> previousRates = new ArrayList<>();
         for (int i = 0; previousRates.size() < count && i < rates.size(); i++) {
             CurrencyRate rate = rates.get(i);
+            //todo условие лучше вынести в метод и назвать по бизнесу
             if (rate.getName().equals(currencyName) && !rate.getDate().isAfter(date)) {
                 previousRates.add(rate);
             }

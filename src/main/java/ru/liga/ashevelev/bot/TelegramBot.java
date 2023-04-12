@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class TelegramBot extends TelegramLongPollingBot {
+    //todo обычно пишут первым модифкатор досиупа private, должно получиться private final static String ...
     static final private String BOT_TOKEN = "6077329097:AAH5YN96PIlBEk5yiLkRlq_hEov8VfNUbx0";
     static final private String BOT_NAME = "ashevelev_bot";
     private final CommandHandler commandHandler = new CommandHandler();
@@ -47,6 +48,10 @@ public class TelegramBot extends TelegramLongPollingBot {
         try {
             this.execute(sendMessage);
         } catch (TelegramApiException e) {
+            //todo Logger.getLogger(getClass().getName()) надо вынести в приватное поле
+            //todo Level.SEVERE встречаю в первый раз, надо использовать ERROR
+            // его в в пакете java.util.logging нет, попробуй создать Logger через org.slf4j.LoggerFactory.getLogger
+            //todo сообщение должно быть боле информативное, напиример failed to communicate with TelegramApi
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "catch TelegramApiException", e);
             throw new RuntimeException(e.getMessage(), e);
         }

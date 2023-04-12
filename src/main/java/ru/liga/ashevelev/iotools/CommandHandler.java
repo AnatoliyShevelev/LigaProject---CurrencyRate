@@ -39,6 +39,10 @@ public class CommandHandler {
     private final LocalDate tomorrow = LocalDate.now().plusDays(1);
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("E dd.MM.yyyy");
 
+    //todo не понял что это, ты здесь вписал все возможные команды, которые могут прийти в консоль? а если будет две валюты, или перепутано местами что то?
+    //тебе надо было написать парсер, который из любой строки вытаскивает валюту дату и т.д
+    // а потом уже с полученными данными идет дальше.
+    // хардкодить все команды которые ты ожидаешь нельзя
     public CommandHandler() {
         //на завтра по среднему алгоритму
         commands.put("rate try -date tomorrow -alg avg", () -> printAverageRateForTomorrow(String.valueOf(FILENAME_TRY), "Турецкая лира"));
@@ -98,6 +102,8 @@ public class CommandHandler {
         commands.put("unknown", () -> System.out.println("неизвестная команда"));
     }
 
+    //todo надо переделать под порсер команды, нельзя прописывать все команды
+    // если прога будет расширяться, например будут добавляться валюты, придется вручную все прописывать, что займет очень много времени + можно допустить ошибку
     public String handleCommand(String command) {
         commands.getOrDefault(command.toLowerCase(), commands.get("unknown")).run();
         String res = result;

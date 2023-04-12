@@ -16,6 +16,7 @@ public class ConsoleApplication {
             System.out.println("Приветствуем!\nВведите команду:");
             while (true) {
                 var command = scanner.nextLine();
+                //todo exit лучше вынести в константу
                 if("exit".equals(command)) {
                     return;
                 }

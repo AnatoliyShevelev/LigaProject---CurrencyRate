@@ -13,6 +13,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class PredictionAlgorithm {
     protected double calculateAverageRate(List<CurrencyRate> rates) {
         double sum = 0;
+        //todo можно сделать через stream
         for (CurrencyRate rate : rates) {
             sum += rate.getRate();
         }
