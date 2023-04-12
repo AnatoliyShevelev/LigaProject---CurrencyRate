@@ -11,8 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import static ru.liga.ashevelev.iotools.FileReader.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * В этом коде мы создаем Map, где ключом является команда, а значением - функция,
@@ -108,8 +109,8 @@ public class CommandHandler {
     private void printAverageRateForTomorrow(String filename, String currency) {
         List<String> csvLines = fileReader.readCsvLines(new File(filename));
         List<CurrencyRate> rates = mapper.toCurrencyRates(csvLines);
-        // System.out.println(tomorrow.format(formatter) + " - " + String.format("%.2f",currencyExchange.calculateAverageRateForTomorrow(currency, rates)));
-        result = tomorrow.format(formatter) + " - " + String.format("%.2f", currencyExchange.calculateAverageRateForTomorrow(currency, rates));
+         System.out.println(tomorrow.format(formatter) + " - " + String.format("%.2f",currencyExchange.calculateAverageRateForTomorrow(currency, rates)));
+       // result = tomorrow.format(formatter) + " - " + String.format("%.2f", currencyExchange.calculateAverageRateForTomorrow(currency, rates));
     }
 
     private void printLastYearRateForTomorrow(String filename, String currency) {
@@ -173,3 +174,4 @@ public class CommandHandler {
         return entry.getKey() + " - " + String.format("%.2f", entry.getValue());
     }
 }
+

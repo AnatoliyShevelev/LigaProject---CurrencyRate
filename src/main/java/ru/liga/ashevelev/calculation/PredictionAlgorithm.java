@@ -12,11 +12,10 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class PredictionAlgorithm {
     protected double calculateAverageRate(List<CurrencyRate> rates) {
-        double sum = 0;
-        for (CurrencyRate rate : rates) {
-            sum += rate.getRate();
-        }
-        return sum / rates.size();
+        return rates.stream()
+                .mapToDouble(CurrencyRate::getRate)
+                .average()
+                .orElse(0);
     }
 
     protected CurrencyRate findLastYearRate(String currencyName, List<CurrencyRate> rates) {

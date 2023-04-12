@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  */
 
 public class CurrencyRateMapper {
-    private final String dateFormat = "[dd/MM/yyyy][dd.MM.yyyy][d/MM/yyyy]";
+    private final static String dateFormat = "[dd/MM/yyyy][dd.MM.yyyy][d/MM/yyyy]";
 
     public List<CurrencyRate> toCurrencyRates(List<String> csvLines) {
         return csvLines.stream()

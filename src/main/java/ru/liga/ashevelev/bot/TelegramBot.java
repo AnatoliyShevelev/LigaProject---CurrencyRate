@@ -6,16 +6,16 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.liga.ashevelev.iotools.CommandHandler;
 import ru.liga.ashevelev.iotools.CommandList;
-import ru.liga.ashevelev.iotools.FileReader;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class TelegramBot extends TelegramLongPollingBot {
-    static final private String BOT_TOKEN = "6077329097:AAH5YN96PIlBEk5yiLkRlq_hEov8VfNUbx0";
-    static final private String BOT_NAME = "ashevelev_bot";
+    private static final String BOT_TOKEN = "6077329097:AAH5YN96PIlBEk5yiLkRlq_hEov8VfNUbx0";
+    private static final String BOT_NAME = "ashevelev_bot";
     private final CommandHandler commandHandler = new CommandHandler();
     private final CommandList commandList = new CommandList();
+   private static final Logger logger = LoggerFactory.getLogger(TelegramBot.class);
 
     @Override
     public String getBotUsername() {
@@ -27,7 +27,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         return BOT_TOKEN;
     }
 
-    @Override
+
     public void onUpdateReceived(Update update) {
 
         String chatId = update.getMessage().getChatId().toString();
@@ -47,7 +47,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         try {
             this.execute(sendMessage);
         } catch (TelegramApiException e) {
-            Logger.getLogger(getClass().getName()).log(Level.SEVERE, "catch TelegramApiException", e);
+            logger.error("failed to communicate with TelegramApi", e);
             throw new RuntimeException(e.getMessage(), e);
         }
     }

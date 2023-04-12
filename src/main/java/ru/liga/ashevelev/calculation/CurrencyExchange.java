@@ -14,6 +14,7 @@ public class CurrencyExchange {
 
     private static final int PREVIOUS_RATES_COUNT = 7;
     private final PredictionAlgorithm predictionAlgorithm = new PredictionAlgorithm();
+    private final String dayFormat = "E dd.MM.yyyy";
 
     public double calculateAverageRateForTomorrow(String currencyName, List<CurrencyRate> rates) {
         CurrencyRate todayRate = findLatestRate(currencyName, rates);
@@ -62,7 +63,7 @@ public class CurrencyExchange {
             CurrencyRate latestRate = findLatestRate(currencyName, rates);
             List<CurrencyRate> previousRates = findPreviousRates(currencyName, latestRate.getDate(), PREVIOUS_RATES_COUNT + i, rates);
             double averageRate = predictionAlgorithm.calculateAverageRate(previousRates);
-            String date = currentDate.plusDays(i + 1).format(DateTimeFormatter.ofPattern("E dd.MM.yyyy"));
+            String date = currentDate.plusDays(i + 1).format(DateTimeFormatter.ofPattern(dayFormat));
             averageRates.put(date, averageRate);
         }
         return averageRates;
@@ -74,7 +75,7 @@ public class CurrencyExchange {
         for (int i = 0; i < period; i++) {
             CurrencyRate rateLastYear = predictionAlgorithm.findLastYearRate(currencyName, rates);
             double lastYearRate = rateLastYear.getRate();
-            String date = currentDate.plusDays(i + 1).format(DateTimeFormatter.ofPattern("E dd.MM.yyyy"));
+            String date = currentDate.plusDays(i + 1).format(DateTimeFormatter.ofPattern(dayFormat));
             lastYearRates.put(date, lastYearRate);
         }
         return lastYearRates;
@@ -87,7 +88,7 @@ public class CurrencyExchange {
             LocalDate date = currentDate.plusDays(i + 1);
             CurrencyRate randomRate = predictionAlgorithm.findRandomRateForDate(currencyName, rates, date);
             double rate = randomRate.getRate();
-            String dateString = date.format(DateTimeFormatter.ofPattern("E dd.MM.yyyy"));
+            String dateString = date.format(DateTimeFormatter.ofPattern(dayFormat));
             randomRates.put(dateString, rate);
         }
         return randomRates;
@@ -97,7 +98,7 @@ public class CurrencyExchange {
         List<CurrencyRate> futureRates = new ArrayList<>();
         for (int i = 0; futureRates.size() < count && i < rates.size(); i++) {
             CurrencyRate rate = rates.get(i);
-            if (rate.getName().equals(currencyName) && rate.getDate().isAfter(date)) {
+            if (hasRateFound(rate, currencyName, date)) {
                 futureRates.add(rate);
             }
         }
@@ -105,6 +106,10 @@ public class CurrencyExchange {
             throw new IllegalArgumentException(String.format("Not enough rates found for %s after %s", currencyName, date));
         }
         return futureRates;
+    }
+
+    private boolean hasRateFound(CurrencyRate rate, String currencyName, LocalDate date) {
+        return rate.getName().equals(currencyName) && rate.getDate().isAfter(date);
     }
 
 
@@ -121,7 +126,7 @@ public class CurrencyExchange {
         List<CurrencyRate> previousRates = new ArrayList<>();
         for (int i = 0; previousRates.size() < count && i < rates.size(); i++) {
             CurrencyRate rate = rates.get(i);
-            if (rate.getName().equals(currencyName) && !rate.getDate().isAfter(date)) {
+            if (hasRateFoundNotFoundAfterDate(rate, currencyName, date)) {
                 previousRates.add(rate);
             }
         }
@@ -130,4 +135,8 @@ public class CurrencyExchange {
         }
         return previousRates;
     }
+    private boolean hasRateFoundNotFoundAfterDate(CurrencyRate rate, String currencyName, LocalDate date) {
+        return rate.getName().equals(currencyName) && !rate.getDate().isAfter(date);
+    }
+
 }
